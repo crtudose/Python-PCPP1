@@ -1,0 +1,40 @@
+python core syntax
+-----------------
+Let's get back to our elevator example and try out a way to become compliant with Python core syntax.
+
+First, create a Person class without the magic method responsible for addition:
+
+class Person:
+    def __init__(self, weight, age, salary):
+        self.weight = weight
+        self.age = age
+        self.salary = salary
+p1 = Person(30, 40, 50)
+p2 = Person(35, 45, 55)
+
+print(p1 + p2)
+
+The result of running the code is clear – Python doesn’t know how to perform addition on the two Person class objects.
+
+Traceback (most recent call last):
+  File "core#010.py", line 11, in 
+    print(p1 + p2)
+TypeError: unsupported operand type(s) for +: 'Person' and 'Person'
+output
+
+However, there’s a handy special purpose method, __add__(), which will fix the problem.
+
+class Person:
+    def __init__(self, weight, age, salary):
+        self.weight = weight
+        self.age = age
+        self.salary = salary
+
+    def __add__(self, other):
+        return self.weight + other.weight
+
+p1 = Person(30, 40, 50)
+p2 = Person(35, 45, 55)
+
+print(p1 + p2)
+output: 65
