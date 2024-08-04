@@ -38,3 +38,70 @@ p2 = Person(35, 45, 55)
 
 print(p1 + p2)
 output: 65
+
+Pay attention to the fact that the __add__() method does not change any object attribute values – it just returns 
+a value that is the result of adding the appropriate attribute values.
+And in fact, the string class has its own implementation for the '+' operator, which is inherent to strings, 
+different than implementations inherent to integers or floats.
+When you design and implement your own classes and you want to make use of Python core syntax to operate on those 
+class objects, you can easily achieve this by implementing the appropriate magic methods.
+
+class Person:
+    def __init__(self, weight, age, salary):
+        self.weight = weight
+        self.age = age
+        self.salary = salary
+
+    def __add__(self, other):
+        return self.weight + other.weight
+
+p1 = Person(30, 40, 50)
+p2 = Person(35, 45, 55)
+
+print(p1 + p2)
+
+You could ask: how can I know what magic method is responsible for a specific operation?
+The answer could be: start with the dir() and help() functions.
+The dir() function gives you a quick glance at an object’s capabilities and returns a list of the attributes 
+and methods of the object. When you call dir() on integer 10, you'll get:
+
+>>> dir(10)
+['__abs__', '__add__', '__and__', '__bool__', '__ceil__', '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__', '__eq__', '__float__', '__floor__', '__floordiv__', '__format__', '__ge__', '__getattribute__', '__getnewargs__', '__gt__', '__hash__', '__index__', '__init__', '__init_subclass__', '__int__', '__invert__', '__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__new__', '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__', '__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', '__rtruediv__', '__rxor__', '__setattr__', '__sizeof__',
+ '__str__', '__sub__', '__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag', 'numerator', 'real', 'to_bytes']
+output
+
+The names listed above look somehow familiar, so let's see the details delivered by Python itself.
+To get more help on each attribute and method, issue the help() function on an object, as below:
+
+>>> help(10)
+Help on int object:
+
+class int(object)
+ |  int([x]) -> integer
+ |  int(x, base=10) -> integer
+ |
+ |  Convert a number or string to an integer, or return 0 if no arguments
+ |  are given.  If x is a number, return x.__int__().  For floating point
+ |  numbers, this truncates towards zero.
+ |
+ |  If x is not a number or if base is given, then x must be a string,
+ |  bytes, or bytearray instance representing an integer literal in the
+ |  given base.  The literal can be preceded by '+' or '-' and be surrounded
+ |  by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
+ |  Base 0 means to interpret the base from the string as an integer literal.
+ |  >>> int('0b100', base=0)
+ |  4
+ |
+ |  Methods defined here:
+ |
+ |  __abs__(self, /)
+ |      abs(self)
+ |
+ |  __add__(self, value, /)
+ |      Return self+value.
+(...)
+output
+
+The Python help() function is used to display the documentation (if delivered!) of modules, functions, classes, and 
+keywords. In our example, we have displayed the documentation for the built-in integer type. 
+Look at the last lines of the output – it contains information about the __abs__ and __add__ special methods.
