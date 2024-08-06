@@ -169,3 +169,13 @@ Inheritance creates a class hierarchy. Any object bound to a specific level of c
 inheritance is a way of building a new class, not from scratch, but by using an already defined repertoire of traits
 Each subclass is more specialized (or more specific) than its superclass. 
 Conversely, each superclass is more general (more abstract) than any of its subclasses.
+
+multiple inheritance should be used with more prudence than single inheritance because:
+ - a single inheritance class is always simpler, safer, and easier to understand and maintain;
+ - multiple inheritance may make method overriding somewhat tricky; moreover, using the super() function can lead to ambiguity;
+ - it is highly probable that by implementing multiple inheritance you are violating the single responsibility principle;
+
+The spectrum of issues possibly coming from multiple inheritance is illustrated by a classical problem named the diamond problem
+ - There is the top-most superclass named A;
+ - there are two subclasses derived from A — B and C;
+ - and there is also the bottom-most subclass named D, derived from B and C 
